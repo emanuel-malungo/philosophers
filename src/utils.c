@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:52:58 by emalungo          #+#    #+#             */
-/*   Updated: 2024/10/21 15:03:19 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:12:32 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	check_numbers(char **argv, t_philosopher *philo)
 	philo->t_cat = ft_atoi(argv[3]);
 	philo->t_sleep = ft_atoi(argv[4]);
 	philo->n_times_eat = ft_atoi(argv[5]);
-	printf("%d", philo->n_times_eat);
 	if (philo->n_philo <= 0 || philo->t_die <= 0
 		|| philo->t_cat <= 0 || philo->t_sleep <= 0
 		|| philo->n_times_eat <= 0)
