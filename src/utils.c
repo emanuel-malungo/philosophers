@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:52:58 by emalungo          #+#    #+#             */
-/*   Updated: 2024/10/21 15:12:32 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/10/25 16:35:07 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,20 @@ t_philosopher	*init_philo(void)
 	return (philo);
 }
 
-int	check_numbers(char **argv, t_philosopher *philo)
+int	check_numbers(int argc, char **argv, t_philosopher *philo)
 {
 	philo->n_philo = ft_atoi(argv[1]);
-	philo->t_die = ft_atoi(argv[2]);
-	philo->t_cat = ft_atoi(argv[3]);
-	philo->t_sleep = ft_atoi(argv[4]);
-	philo->n_times_eat = ft_atoi(argv[5]);
+	philo->t_cat = ft_atoi(argv[2]);
+	philo->t_sleep = ft_atoi(argv[3]);
+	philo->t_die = ft_atoi(argv[4]);
+	if (argc == 6)
+	{
+		philo->n_times_eat = ft_atoi(argv[5]);
+		if (philo->n_times_eat <= 0)
+			return (0);
+	}
 	if (philo->n_philo <= 0 || philo->t_die <= 0
-		|| philo->t_cat <= 0 || philo->t_sleep <= 0
-		|| philo->n_times_eat <= 0)
+		|| philo->t_cat <= 0 || philo->t_sleep <= 0)
 	{
 		return (0);
 	}
@@ -80,7 +84,7 @@ int	check_parse_args(int argc, char **argv, t_philosopher *philo)
 	int	i;
 	int	j;
 
-	if (argc != 6)
+	if (argc != 5 && argc != 6)
 		return (0);
 	i = 1;
 	while (i < argc)
@@ -94,7 +98,7 @@ int	check_parse_args(int argc, char **argv, t_philosopher *philo)
 		}
 		i++;
 	}
-	if (!check_numbers(argv, philo))
+	if (!check_numbers(argc, argv, philo))
 	{
 		return (0);
 	}	

@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:42:22 by emalungo          #+#    #+#             */
-/*   Updated: 2024/10/21 14:50:39 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/10/25 16:28:58 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef struct s_philosopher
 }				t_philosopher;
 
 // ./src/utils.c
-//
 t_philosopher	*init_philo(void);
 int				check_parse_args(int argc, char **argv, t_philosopher *philo);
 
