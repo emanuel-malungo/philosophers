@@ -6,11 +6,21 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:52:58 by emalungo          #+#    #+#             */
-/*   Updated: 2024/10/25 16:35:07 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/01 15:07:36 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosopher.h"
+
+long	get_time(void)
+{
+	struct timeval	time;
+	long			ms;
+
+	gettimeofday(&time, NULL);
+	ms = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	return (ms);
+}
 
 static int	ft_isdigit(int c)
 {
@@ -44,48 +54,32 @@ int	ft_atoi(char *str)
 	return (res * sig);
 }
 
-t_philosopher	*init_philo(void)
-{
-	t_philosopher	*philo;
 
-	philo = (t_philosopher *)malloc(sizeof(t_philosopher));
-	if (!philo)
-		return (NULL);
-	philo->t_cat = 0;
-	philo->t_die = 0;
-	philo->t_sleep = 0;
-	philo->n_philo = 0;
-	philo->n_times_eat = 0;
-	return (philo);
-}
 
-int	check_numbers(int argc, char **argv, t_philosopher *philo)
+int	check_numbers(int argc, char **argv, t_table *table)
 {
-	philo->n_philo = ft_atoi(argv[1]);
-	philo->t_cat = ft_atoi(argv[2]);
-	philo->t_sleep = ft_atoi(argv[3]);
-	philo->t_die = ft_atoi(argv[4]);
+	table->n_philo = ft_atoi(argv[1]);
+	table->t_cat = ft_atoi(argv[3]);
+	table->t_sleep = ft_atoi(argv[4]);
+	table->t_die = ft_atoi(argv[2]);
 	if (argc == 6)
 	{
-		philo->n_times_eat = ft_atoi(argv[5]);
-		if (philo->n_times_eat <= 0)
+		table->n_times_eat = ft_atoi(argv[5]);
+		if (table->n_times_eat <= 0)
 			return (0);
 	}
-	if (philo->n_philo <= 0 || philo->t_die <= 0
-		|| philo->t_cat <= 0 || philo->t_sleep <= 0)
+	if (table->n_philo <= 0 || table->t_die <= 0
+		|| table->t_cat <= 0 || table->t_sleep <= 0)
 	{
 		return (0);
 	}
 	return (1);
 }
 
-int	check_parse_args(int argc, char **argv, t_philosopher *philo)
+int	check_parse_args(int argc, char **argv)
 {
 	int	i;
 	int	j;
-
-	if (argc != 5 && argc != 6)
-		return (0);
 	i = 1;
 	while (i < argc)
 	{
@@ -98,9 +92,5 @@ int	check_parse_args(int argc, char **argv, t_philosopher *philo)
 		}
 		i++;
 	}
-	if (!check_numbers(argc, argv, philo))
-	{
-		return (0);
-	}	
 	return (1);
 }
