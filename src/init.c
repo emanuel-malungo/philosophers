@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:02:56 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/01 15:23:20 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:20:49 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@ void	*verify_death(void *arg)
 	long			time;
 
 	philo = (t_philosopher *)arg;
+    while (philo->table->check_n_philo != philo->table->n_philo)
+        ;
 	while (philo->table->is_alive)
 	{
-		usleep(100);
-        // pthread_mutex_lock(&philo->table->alive_mutex);
+        pthread_mutex_lock(&philo->table->alive_mutex);
         time = get_time();
         if (time - philo->last_meal > philo->table->t_die)
         {
-            print_status(philo, "died");
+            print_status(philo, "is died");
             philo->table->is_alive = 0;
+            pthread_mutex_unlock(&philo->table->alive_mutex);
             break ;
         }
-        // pthread_mutex_unlock(&philo->table->alive_mutex);
-        // printf("\nid %d %ld\n", philo->id, get_time() - philo->last_meal);
+        pthread_mutex_unlock(&philo->table->alive_mutex);
 		usleep(100);
 	}
 	return (NULL);
@@ -65,62 +66,50 @@ void	*simulation(void *arg)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)arg;
-    // while (philo->table->is_alive)
-    // {
-        // routine(philo);
-        while (1)
+ 
+    pthread_mutex_lock(&philo->table->alive_mutex);
+    philo->table->check_n_philo += 1;
+    pthread_mutex_unlock(&philo->table->alive_mutex);
+    while (1)
+    {
+        get_forks(philo);
+        pthread_mutex_lock(&philo->table->alive_mutex);
+        if (!philo->table->is_alive)
         {
-            get_forks(philo);
-            
-            // Verificação de morte antes de comer
-            pthread_mutex_lock(&philo->table->alive_mutex);
-            if (!philo->table->is_alive)
-            {
-                pthread_mutex_unlock(&philo->table->alive_mutex);
-                drop_forks(philo);
-                break;
-            }
             pthread_mutex_unlock(&philo->table->alive_mutex);
-
-            print_status(philo, "is eating");
-            
-            // Atualiza o tempo da última refeição
-            pthread_mutex_lock(&philo->table->alive_mutex);
-            philo->last_meal = get_time();
-            pthread_mutex_unlock(&philo->table->alive_mutex);
-            
-            usleep(philo->table->t_cat * 1000);  // Tempo de comer
             drop_forks(philo);
-            
-            // Verificação de morte após comer
-            pthread_mutex_lock(&philo->table->alive_mutex);
-            if (get_time() - philo->last_meal > philo->table->t_die)
-            {
-                print_status(philo, "died");
-                philo->table->is_alive = 0;
-                pthread_mutex_unlock(&philo->table->alive_mutex);
-                break;
-            }
-            pthread_mutex_unlock(&philo->table->alive_mutex);
-
-            print_status(philo, "is sleeping");
-            usleep(philo->table->t_sleep * 1000);  // Tempo de dormir
-
-            // Verificação de morte após dormir
-            pthread_mutex_lock(&philo->table->alive_mutex);
-            if (get_time() - philo->last_meal > philo->table->t_die)
-            {
-                print_status(philo, "died");
-                philo->table->is_alive = 0;
-                pthread_mutex_unlock(&philo->table->alive_mutex);
-                break;
-            }
-            pthread_mutex_unlock(&philo->table->alive_mutex);
-
-            print_status(philo, "is thinking");
-            usleep(1000);
+            break;
         }
-    // }
+        pthread_mutex_unlock(&philo->table->alive_mutex);
+        print_status(philo, "is eating");
+        pthread_mutex_lock(&philo->table->alive_mutex);
+        philo->last_meal = get_time();
+        pthread_mutex_unlock(&philo->table->alive_mutex);
+        usleep(philo->table->t_cat * 1000);
+        drop_forks(philo);
+        pthread_mutex_lock(&philo->table->alive_mutex);
+        if (get_time() - philo->last_meal > philo->table->t_die)
+        {
+            print_status(philo, "died");
+            philo->table->is_alive = 0;
+            pthread_mutex_unlock(&philo->table->alive_mutex);
+            break;
+        }
+        pthread_mutex_unlock(&philo->table->alive_mutex);
+        print_status(philo, "is sleeping");
+        usleep(philo->table->t_sleep * 1000);
+        pthread_mutex_lock(&philo->table->alive_mutex);
+        if (get_time() - philo->last_meal > philo->table->t_die)
+        {
+            print_status(philo, "died");
+            philo->table->is_alive = 0;
+            pthread_mutex_unlock(&philo->table->alive_mutex);
+            break;
+        }
+        pthread_mutex_unlock(&philo->table->alive_mutex);
+        print_status(philo, "is thinking");
+        usleep(1000);
+    }
 	return (NULL);
 }
 

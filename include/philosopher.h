@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:42:22 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/01 15:13:37 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/01 15:45:14 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_table
 	int	t_cat;
 	int	t_sleep;
 	int	n_philo;
+	_Atomic int check_n_philo;
 	int is_alive;
 	int	n_times_eat;
 	long	start_time;

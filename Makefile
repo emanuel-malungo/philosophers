@@ -1,4 +1,4 @@
-CC = cc
+CC = cc -fsanitize=thread -g
 DIR_SRC = ./src
 NAME = philosopher
 DIR_INC = ./include
