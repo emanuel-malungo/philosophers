@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:42:22 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/01 15:45:14 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:08:03 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_table
 	int is_alive;
 	int	n_times_eat;
 	long	start_time;
+	pthread_cond_t	ready_cond;
 	pthread_t	destroy_philo;
 	pthread_mutex_t	*print;
 	pthread_mutex_t	alive_mutex;

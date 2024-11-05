@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:52:24 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/01 14:40:02 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:45:59 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_philosopher	*init_philo(t_table *table)
 	memset(philo, 0, sizeof(t_philosopher));
 	return (philo);
 }
+
 t_table *init_table(void)
 {
 	t_table	*table;
@@ -37,7 +38,15 @@ t_table *init_table(void)
 	return (table);
 }
 
-
+void	print_status(t_philosopher *philo, char *status)
+{
+    pthread_mutex_lock(philo->table->print);
+    if (philo->table->is_alive != 0)
+	{
+        printf("%ld %d %s\n", get_time() - philo->table->start_time, philo->id, status);
+    }
+    pthread_mutex_unlock(philo->table->print);
+}
 
 int	main(int argc, char **argv)
 {
