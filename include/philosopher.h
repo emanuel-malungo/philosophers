@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:42:22 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/04 16:08:03 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:33:32 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct s_table
 	int	t_cat;
 	int	t_sleep;
 	int	n_philo;
-	_Atomic int check_n_philo;
 	int is_alive;
 	int	n_times_eat;
 	long	start_time;
@@ -58,5 +57,6 @@ int	check_parse_args(int argc, char **argv);
 int init(t_philosopher *philo, t_table *table);
 void	print_status(t_philosopher *philo, char *status);
 int	check_numbers(int argc, char **argv, t_table *table);
+void *verify_death(void *arg);
 
 #endif

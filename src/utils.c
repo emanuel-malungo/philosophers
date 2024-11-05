@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:52:58 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/01 15:07:36 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:45:00 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	check_numbers(int argc, char **argv, t_table *table)
 		if (table->n_times_eat <= 0)
 			return (0);
 	}
+	table->n_times_eat = -1;
 	if (table->n_philo <= 0 || table->t_die <= 0
 		|| table->t_cat <= 0 || table->t_sleep <= 0)
 	{
