@@ -1,14 +1,15 @@
-CC = cc 
+CC = cc -fsanitize=thread -g
 DIR_SRC = ./src
-NAME = philosopher
+NAME = philo
 DIR_INC = ./include
 CFLAGS = -Wall -Wextra -Werror -I $(DIR_INC)
 
-SRC = $(DIR_SRC)/philosopher.c \
+SRC = $(DIR_SRC)/philo.c \
       $(DIR_SRC)/utils.c \
 	  $(DIR_SRC)/init.c \
 	  $(DIR_SRC)/fork.c \
 	  $(DIR_SRC)/threads.c \
+	  $(DIR_SRC)/routine.c \
 
 OBJ = $(SRC:$(DIR_SRC)/%.c=%.o)
 

@@ -6,11 +6,11 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:52:58 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/05 16:40:03 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/06 11:37:21 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosopher.h"
+#include "../include/philo.h"
 
 long	get_time(void)
 {
@@ -54,8 +54,6 @@ int	ft_atoi(char *str)
 	return (res * sig);
 }
 
-
-
 int	check_numbers(int argc, char **argv, t_table *table)
 {
 	table->n_philo = ft_atoi(argv[1]);
@@ -81,6 +79,7 @@ int	check_parse_args(int argc, char **argv)
 {
 	int	i;
 	int	j;
+
 	i = 1;
 	while (i < argc)
 	{
