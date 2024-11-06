@@ -6,36 +6,18 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:52:24 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/06 11:04:53 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:25:19 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-t_philosopher	*init_philo(t_table *table)
+void	free_all(t_philosopher *philo, t_table *table)
 {
-	t_philosopher	*philo;
-
-	philo = (t_philosopher *)malloc(sizeof(t_philosopher) * table->n_philo);
-	if (!philo)
-		return (NULL);
-	memset(philo, 0, sizeof(t_philosopher));
-	return (philo);
-}
-
-t_table	*init_table(void)
-{
-	t_table	*table;
-
-	table = (t_table *)malloc(sizeof(t_table));
-	if (!table)
-		return (NULL);
-	memset(table, 0, sizeof(t_table));
-	table->start_time = get_time();
-	table->is_alive = 1;
-	table->print = malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(table->print, NULL);
-	return (table);
+	free(table->print);
+	free(table->forks);
+	free(table);
+	free(philo);
 }
 
 int	main(int argc, char **argv)
@@ -58,9 +40,10 @@ int	main(int argc, char **argv)
 	if (!init(philo, table))
 	{
 		printf("Error initializing forks.\n");
+		free(table);
 		free(philo);
 		return (1);
 	}
-	free(philo);
+	free_all(philo, table);
 	return (0);
 }

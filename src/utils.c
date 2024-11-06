@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:52:58 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/06 11:37:21 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/06 11:51:47 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	ft_isdigit(int c)
 	return (0);
 }
 
-int	ft_atoi(char *str)
+static int	ft_atoi(char *str)
 {
 	int	i;
 	int	sig;

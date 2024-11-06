@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:38:57 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/06 11:35:27 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:57:02 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,23 @@ int	check_meals(t_philosopher *philo, int meals_needed, int meals_count)
 	}
 	return (1);
 }
+
+
+// int	check_meals(t_philosopher *philo, int meals_needed, int meals_count)
+// {
+// 	if (meals_needed != -1 && meals_count >= meals_needed)
+// 	{
+// 		pthread_mutex_lock(&philo->table->alive_mutex);
+// 		philo->table->finished_eating_count++;
+// 		if (philo->table->finished_eating_count == philo->table->n_philo)
+// 		{
+// 			philo->table->is_alive = 0;
+// 		}
+// 		pthread_mutex_unlock(&philo->table->alive_mutex);
+// 		return (0);
+// 	}
+// 	return (1);
+// }
 
 int	philosopher_routine(t_philosopher *philo)
 {

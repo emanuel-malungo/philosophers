@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:42:22 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/06 11:02:04 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:57:34 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,27 @@ typedef struct s_philosopher
 	pthread_t		death_thread;
 }				t_philosopher;
 
+//	./src/utils.c
 long	get_time(void);
+int		check_parse_args(int argc, char **argv);
+int		check_numbers(int argc, char **argv, t_table *table);
+
+//	./src/init.c
+t_table	*init_table(void);
+t_philosopher	*init_philo(t_table *table);
+int		init(t_philosopher *philo, t_table *table);
+
+//	./src/threads.c
+void	*simulation(void *arg);
+void	*verify_death(void *arg);
+
+//	./src/routine.c
+int		philosopher_routine(t_philosopher *philo);
+void	print_status(t_philosopher *philo, char *status);
+
+//	./src/forks.c
 int		init_forks(t_table *table);
 void	get_forks(t_philosopher *philo);
 void	drop_forks(t_philosopher *philo);
-int		check_parse_args(int argc, char **argv);
-int		init(t_philosopher *philo, t_table *table);
-void	print_status(t_philosopher *philo, char *status);
-int		check_numbers(int argc, char **argv, t_table *table);
-void	*verify_death(void *arg);
-int		check_meals(t_philosopher *philo, int meals_needed, int meals_count);
-int		philosopher_routine(t_philosopher *philo);
 
 #endif
