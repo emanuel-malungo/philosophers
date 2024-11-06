@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:42:22 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/05 14:33:32 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/06 08:59:56 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_table
 	int	t_cat;
 	int	t_sleep;
 	int	n_philo;
-	int is_alive;
+	_Atomic int is_alive;
 	int	n_times_eat;
 	long	start_time;
 	pthread_cond_t	ready_cond;
@@ -34,6 +34,7 @@ typedef struct s_table
 	pthread_mutex_t	*print;
 	pthread_mutex_t	alive_mutex;
 	pthread_mutex_t	*forks;
+	_Atomic int finished_eating_count;
 }				t_table;
 
 typedef struct s_philosopher

@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:52:24 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/05 11:45:59 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/06 08:46:13 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,22 @@ t_table *init_table(void)
 
 void	print_status(t_philosopher *philo, char *status)
 {
-    pthread_mutex_lock(philo->table->print);
+	// pthread_mutex_lock(&philo->table->alive_mutex);
+    	pthread_mutex_lock(philo->table->print);
     if (philo->table->is_alive != 0)
 	{
         printf("%ld %d %s\n", get_time() - philo->table->start_time, philo->id, status);
     }
-    pthread_mutex_unlock(philo->table->print);
+    	pthread_mutex_unlock(philo->table->print);
+	// pthread_mutex_unlock(&philo->table->alive_mutex);
 }
+
 
 int	main(int argc, char **argv)
 {
 	t_table	*table;
 	t_philosopher	*philo;
-
+	// -fsanitize=thread -g
 	if (argc != 5 && argc != 6)
 		return (0);
 	table = init_table();

@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:52:58 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/05 14:45:00 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:40:03 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ int	check_numbers(int argc, char **argv, t_table *table)
 	table->t_cat = ft_atoi(argv[3]);
 	table->t_sleep = ft_atoi(argv[4]);
 	table->t_die = ft_atoi(argv[2]);
+	table->n_times_eat = -1;
 	if (argc == 6)
 	{
 		table->n_times_eat = ft_atoi(argv[5]);
 		if (table->n_times_eat <= 0)
 			return (0);
 	}
-	table->n_times_eat = -1;
 	if (table->n_philo <= 0 || table->t_die <= 0
 		|| table->t_cat <= 0 || table->t_sleep <= 0)
 	{
