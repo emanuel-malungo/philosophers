@@ -6,20 +6,17 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:52:58 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/06 11:51:47 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/07 15:01:24 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-long	get_time(void)
+void	free_all(t_philosopher *philo, t_table *table)
 {
-	struct timeval	time;
-	long			ms;
-
-	gettimeofday(&time, NULL);
-	ms = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-	return (ms);
+	free(table->forks);
+	free(table);
+	free(philo);
 }
 
 static int	ft_isdigit(int c)
@@ -56,6 +53,8 @@ static int	ft_atoi(char *str)
 
 int	check_numbers(int argc, char **argv, t_table *table)
 {
+	if (!check_parse_args(argc, argv))
+		return (0);
 	table->n_philo = ft_atoi(argv[1]);
 	table->t_cat = ft_atoi(argv[3]);
 	table->t_sleep = ft_atoi(argv[4]);

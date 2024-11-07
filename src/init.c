@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:02:56 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/06 15:45:18 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/07 15:50:04 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ t_table	*init_table(void)
 	memset(table, 0, sizeof(t_table));
 	table->start_time = get_time();
 	table->is_alive = 1;
-	table->print = malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(table->print, NULL);
+	pthread_mutex_init(&table->print, NULL);
 	return (table);
 }
 
@@ -53,6 +52,7 @@ int	init(t_philosopher *philo, t_table *table)
 		philo[i].rigth_fork = (i + 1) % table->n_philo;
 		philo[i].table = table;
 		philo[i].last_meal = get_time();
+		pthread_mutex_init(&philo[i].eaten_mutex, NULL);
 	}
 	i = -1;
 	while (++i < table->n_philo)

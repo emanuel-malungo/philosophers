@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:38:57 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/07 13:11:43 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:06:29 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,25 @@
 
 void	print_status(t_philosopher *philo, char *status)
 {
-	pthread_mutex_lock(philo->table->print);
+	pthread_mutex_lock(&philo->table->alive_mutex);
 	if (philo->table->is_alive != 0)
 	{
-		printf("%ld id: %d {%d} %s\n", get_time() - philo->table->start_time,
-			philo->id, philo->eaten, status);
+		pthread_mutex_lock(&philo->table->print);
+		printf("%ld %d %s\n", get_time() - philo->table->start_time,
+			philo->id, status);
+		pthread_mutex_unlock(&philo->table->print);
 	}
-	pthread_mutex_unlock(philo->table->print);
+	pthread_mutex_unlock(&philo->table->alive_mutex);
+}
+
+long	get_time(void)
+{
+	struct timeval	time;
+	long			ms;
+
+	gettimeofday(&time, NULL);
+	ms = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	return (ms);
 }
 
 int	eat_routine(t_philosopher *philo, int *meals_count)
@@ -40,16 +52,10 @@ int	eat_routine(t_philosopher *philo, int *meals_count)
 	pthread_mutex_unlock(&philo->table->alive_mutex);
 	usleep(philo->table->t_cat * 1000);
 	(*meals_count)++;
+	pthread_mutex_lock(&philo->eaten_mutex);
 	philo->eaten++;
+	pthread_mutex_unlock(&philo->eaten_mutex);
 	drop_forks(philo);
-	return (1);
-}
-
-int	rest_routine(t_philosopher *philo)
-{
-	print_status(philo, "is sleeping");
-	usleep(philo->table->t_sleep * 1000);
-	print_status(philo, "is thinking");
 	return (1);
 }
 
@@ -80,8 +86,9 @@ int	philosopher_routine(t_philosopher *philo)
 	{
 		if (!eat_routine(philo, &meals_count))
 			return (0);
-		if (!rest_routine(philo))
-			return (0);
+		print_status(philo, "is sleeping");
+		usleep(philo->table->t_sleep * 1000);
+		print_status(philo, "is thinking");
 		if (!check_meals(philo, meals_needed, meals_count))
 			return (0);
 	}
