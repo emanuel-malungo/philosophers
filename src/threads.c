@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 16:23:53 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/06 15:49:30 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/07 13:27:04 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,36 @@ static int	check_philosopher_death(t_philosopher *philo, t_table *table)
 static int	check_all_philosophers(t_philosopher *philo, t_table *table)
 {
 	int	i;
-
+	int philosophers_done = 0;
+	
 	i = 0;
 	while (i < table->n_philo)
 	{
 		pthread_mutex_lock(&table->alive_mutex);
+		if (philo[i].eaten >= table->n_times_eat)
+		{
+			if (philo[i].eaten >= table->n_times_eat && table->n_times_eat != -1)
+			{
+				pthread_mutex_unlock(&table->alive_mutex);
+				i++;
+				philosophers_done++;
+				continue;
+			}
+		}
 		if (check_philosopher_death(&philo[i], table))
 		{
 			pthread_mutex_unlock(&table->alive_mutex);
 			return (1);
 		}
 		pthread_mutex_unlock(&table->alive_mutex);
-		usleep(100);
+		usleep(50);
 		i++;
+	}
+	if (philosophers_done == table->n_philo)
+	{
+		pthread_mutex_lock(&table->alive_mutex);
+		table->is_alive = 0;
+		pthread_mutex_unlock(&table->alive_mutex);
 	}
 	return (0);
 }

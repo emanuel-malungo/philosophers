@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:38:57 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/06 15:57:02 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/07 13:11:43 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	print_status(t_philosopher *philo, char *status)
 	pthread_mutex_lock(philo->table->print);
 	if (philo->table->is_alive != 0)
 	{
-		printf("%ld %d %s\n", get_time() - philo->table->start_time,
-			philo->id, status);
+		printf("%ld id: %d {%d} %s\n", get_time() - philo->table->start_time,
+			philo->id, philo->eaten, status);
 	}
 	pthread_mutex_unlock(philo->table->print);
 }
@@ -40,6 +40,7 @@ int	eat_routine(t_philosopher *philo, int *meals_count)
 	pthread_mutex_unlock(&philo->table->alive_mutex);
 	usleep(philo->table->t_cat * 1000);
 	(*meals_count)++;
+	philo->eaten++;
 	drop_forks(philo);
 	return (1);
 }
@@ -60,30 +61,13 @@ int	check_meals(t_philosopher *philo, int meals_needed, int meals_count)
 		philo->table->finished_eating_count++;
 		if (philo->table->finished_eating_count == philo->table->n_philo)
 		{
-			philo->table->is_alive = 0;
+			philo->table->is_alive = 2;
 		}
 		pthread_mutex_unlock(&philo->table->alive_mutex);
 		return (0);
 	}
 	return (1);
 }
-
-
-// int	check_meals(t_philosopher *philo, int meals_needed, int meals_count)
-// {
-// 	if (meals_needed != -1 && meals_count >= meals_needed)
-// 	{
-// 		pthread_mutex_lock(&philo->table->alive_mutex);
-// 		philo->table->finished_eating_count++;
-// 		if (philo->table->finished_eating_count == philo->table->n_philo)
-// 		{
-// 			philo->table->is_alive = 0;
-// 		}
-// 		pthread_mutex_unlock(&philo->table->alive_mutex);
-// 		return (0);
-// 	}
-// 	return (1);
-// }
 
 int	philosopher_routine(t_philosopher *philo)
 {

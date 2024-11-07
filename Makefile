@@ -1,4 +1,4 @@
-CC = cc -fsanitize=thread -g
+CC = cc
 DIR_SRC = ./src
 DIR_OBJ = ./obj
 NAME = philo
