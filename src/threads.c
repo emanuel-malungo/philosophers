@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 16:23:53 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/07 16:03:52 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:44:18 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,21 @@ static int	check_philosopher_death(t_philosopher *philo, t_table *table)
 static int	check_all_philosophers(t_philosopher *philo, t_table *table)
 {
 	int	i;
-	int philosophers_done = 0;
-	
+	int	philo_done;
+
 	i = 0;
+	philo_done = 0;
 	while (i < table->n_philo)
 	{
 		pthread_mutex_lock(&philo[i].eaten_mutex);
 		if (philo[i].eaten >= table->n_times_eat)
 		{
-			if (philo[i].eaten >= table->n_times_eat && table->n_times_eat != -1)
+			if (philo[i].eaten >= table->n_times_eat table->n_times_eat != -1)
 			{
 				pthread_mutex_unlock(&philo[i].eaten_mutex);
 				i++;
-				philosophers_done++;
-				continue;
+				philo_done++;
+				continue ;
 			}
 		}
 		pthread_mutex_unlock(&philo[i].eaten_mutex);
@@ -58,7 +59,7 @@ static int	check_all_philosophers(t_philosopher *philo, t_table *table)
 		usleep(100);
 		i++;
 	}
-	if (philosophers_done == table->n_philo)
+	if (philo_done == table->n_philo)
 	{
 		pthread_mutex_lock(&table->alive_mutex);
 		table->is_alive = 0;

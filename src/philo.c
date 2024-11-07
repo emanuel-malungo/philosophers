@@ -6,13 +6,11 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:52:24 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/07 14:57:32 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:44:45 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-
-
 
 int	main(int argc, char **argv)
 {

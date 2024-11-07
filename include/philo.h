@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:42:22 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/07 15:59:07 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:36:26 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ typedef struct s_table
 	int				t_cat;
 	int				t_sleep;
 	int				n_philo;
-	 int		is_alive;
+	int				is_alive;
 	int				n_times_eat;
 	long			start_time;
 	pthread_t		destroy_philo;
 	pthread_mutex_t	print;
 	pthread_mutex_t	alive_mutex;
 	pthread_mutex_t	*forks;
-	int		finished_eating_count;
+	int				finished_eating_count;
 }				t_table;
 
 typedef struct s_philosopher
@@ -46,7 +46,7 @@ typedef struct s_philosopher
 	pthread_t		thread;
 	t_table			*table;
 	pthread_t		death_thread;
-	pthread_mutex_t eaten_mutex;
+	pthread_mutex_t	eaten_mutex;
 }				t_philosopher;
 
 //	./src/utils.c
@@ -55,9 +55,9 @@ void	free_all(t_philosopher *philo, t_table *table);
 int		check_numbers(int argc, char **argv, t_table *table);
 
 //	./src/init.c
-t_philosopher	*init_philo(t_table *table);
-t_table	*init_table(void);
 int		init(t_philosopher *philo, t_table *table);
+t_table	*init_table(void);
+t_philosopher	*init_philo(t_table *table);
 
 //	./src/threads.c
 void	*simulation(void *arg);
