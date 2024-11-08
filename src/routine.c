@@ -6,15 +6,15 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:38:57 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/07 16:06:29 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/08 11:21:15 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
+// Function to print the status of a philosopher.
 void	print_status(t_philosopher *philo, char *status)
 {
-	pthread_mutex_lock(&philo->table->alive_mutex);
 	if (philo->table->is_alive != 0)
 	{
 		pthread_mutex_lock(&philo->table->print);
@@ -22,9 +22,9 @@ void	print_status(t_philosopher *philo, char *status)
 			philo->id, status);
 		pthread_mutex_unlock(&philo->table->print);
 	}
-	pthread_mutex_unlock(&philo->table->alive_mutex);
 }
 
+// Function to get the current time in milliseconds.
 long	get_time(void)
 {
 	struct timeval	time;
@@ -35,6 +35,7 @@ long	get_time(void)
 	return (ms);
 }
 
+// Function that defines the eating routine for a philosopher.
 int	eat_routine(t_philosopher *philo, int *meals_count)
 {
 	get_forks(philo);
@@ -59,6 +60,7 @@ int	eat_routine(t_philosopher *philo, int *meals_count)
 	return (1);
 }
 
+// Function to check if a philosopher has eaten enough meals.
 int	check_meals(t_philosopher *philo, int meals_needed, int meals_count)
 {
 	if (meals_needed != -1 && meals_count >= meals_needed)
@@ -75,6 +77,7 @@ int	check_meals(t_philosopher *philo, int meals_needed, int meals_count)
 	return (1);
 }
 
+// Function that defines the philosopher's main routine (eat, sleep, think).
 int	philosopher_routine(t_philosopher *philo)
 {
 	int	meals_needed;

@@ -6,12 +6,13 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:52:58 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/07 15:01:24 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/08 11:25:54 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
+// Free allocated memory for philosophers and the table.
 void	free_all(t_philosopher *philo, t_table *table)
 {
 	free(table->forks);
@@ -19,6 +20,7 @@ void	free_all(t_philosopher *philo, t_table *table)
 	free(philo);
 }
 
+// Check if a character is a digit.
 static int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
@@ -26,6 +28,7 @@ static int	ft_isdigit(int c)
 	return (0);
 }
 
+// Convert a string to an integer.
 static int	ft_atoi(char *str)
 {
 	int	i;
@@ -51,6 +54,7 @@ static int	ft_atoi(char *str)
 	return (res * sig);
 }
 
+// Check if the input arguments are valid numbers and assign them to the table.
 int	check_numbers(int argc, char **argv, t_table *table)
 {
 	if (!check_parse_args(argc, argv))
@@ -74,6 +78,7 @@ int	check_numbers(int argc, char **argv, t_table *table)
 	return (1);
 }
 
+// Check if all arguments are digits.
 int	check_parse_args(int argc, char **argv)
 {
 	int	i;

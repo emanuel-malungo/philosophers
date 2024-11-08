@@ -6,12 +6,13 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:13:19 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/06 15:54:45 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/08 11:19:04 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
+// Function to initialize the forks (mutexes) for the table.
 int	init_forks(t_table *table)
 {
 	int	i;
@@ -32,6 +33,7 @@ int	init_forks(t_table *table)
 	return (1);
 }
 
+// Function to lock the forks for a philosopher.
 void	get_forks(t_philosopher *philo)
 {
 	if (philo->id % 2 == 0)
@@ -50,6 +52,7 @@ void	get_forks(t_philosopher *philo)
 	}
 }
 
+// Function to unlock the forks after use.
 void	drop_forks(t_philosopher *philo)
 {
 	if (philo->id % 2 == 0)

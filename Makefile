@@ -1,31 +1,27 @@
-CC = cc -fsanitize=thread -g
-DIR_SRC = ./src
-DIR_OBJ = ./obj
+CC = cc
+SRCDIR = ./src
+INCDIR = ./include
 NAME = philo
-DIR_INC = ./include
-CFLAGS = -Wall -Wextra -Werror -I $(DIR_INC)
+CFLAGS = -Wall -Wextra -Werror -I$(INCDIR)
 
-SRC = $(DIR_SRC)/philo.c \
-      $(DIR_SRC)/utils.c \
-      $(DIR_SRC)/init.c \
-      $(DIR_SRC)/fork.c \
-      $(DIR_SRC)/threads.c \
-      $(DIR_SRC)/routine.c
+SRCS = $(SRCDIR)/philo.c \
+       $(SRCDIR)/utils.c \
+       $(SRCDIR)/fork.c \
+       $(SRCDIR)/threads.c \
+       $(SRCDIR)/routine.c
 
-OBJ = $(SRC:$(DIR_SRC)/%.c=$(DIR_OBJ)/%.o)
-
+OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
-	@mkdir -p $(DIR_OBJ)  # Cria o diretório ./obj se não existir
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
-
 clean:
-	rm -rf $(DIR_OBJ)
+	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)

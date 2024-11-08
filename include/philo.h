@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:42:22 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/07 16:36:26 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/08 10:53:19 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_table
 	int				t_cat;
 	int				t_sleep;
 	int				n_philo;
-	int				is_alive;
+	_Atomic int		is_alive;
 	int				n_times_eat;
 	long			start_time;
 	pthread_t		destroy_philo;
@@ -40,6 +40,7 @@ typedef struct s_philosopher
 {
 	int				id;
 	int				eaten;
+	int				philo_done;
 	long			last_meal;
 	int				left_fork;
 	int				rigth_fork;
@@ -53,11 +54,6 @@ typedef struct s_philosopher
 int		check_parse_args(int argc, char **argv);
 void	free_all(t_philosopher *philo, t_table *table);
 int		check_numbers(int argc, char **argv, t_table *table);
-
-//	./src/init.c
-int		init(t_philosopher *philo, t_table *table);
-t_table	*init_table(void);
-t_philosopher	*init_philo(t_table *table);
 
 //	./src/threads.c
 void	*simulation(void *arg);
