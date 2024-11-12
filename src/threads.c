@@ -91,8 +91,9 @@ void	*verify_death(void *arg)
 	table = philo->table;
 	while (1)
 	{
-		if (check_philosophers_done(philo, table, philo_done)
-			|| check_philosophers_alive(philo, table))
+		if (!check_philosophers_alive(philo, table))
+			return (NULL);
+		if (check_philosophers_done(philo, table, philo_done))
 			return (NULL);
 		pthread_mutex_lock(&table->alive_mutex);
 		if (!table->is_alive)
