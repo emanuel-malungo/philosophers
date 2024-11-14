@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:13:19 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/08 11:19:04 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/14 09:11:21 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,17 @@ void	drop_forks(t_philosopher *philo)
 		pthread_mutex_unlock(&philo->table->forks[philo->rigth_fork]);
 		pthread_mutex_unlock(&philo->table->forks[philo->left_fork]);
 	}
+}
+
+// Check if a philosopher has eaten enough times
+int	has_philosopher_eaten_enough(t_philosopher *philo, t_table *table)
+{
+	pthread_mutex_lock(&philo->eaten_mutex);
+	if (philo->eaten >= table->n_times_eat && table->n_times_eat != -1)
+	{
+		pthread_mutex_unlock(&philo->eaten_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->eaten_mutex);
+	return (0);
 }

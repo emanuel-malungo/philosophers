@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:52:24 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/08 11:17:09 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/14 08:32:34 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_philosopher	*init_philo(t_table *table)
 	if (!philo)
 		return (NULL);
 	memset(philo, 0, sizeof(t_philosopher));
+	philo->philo_done = 0;
 	return (philo);
 }
 

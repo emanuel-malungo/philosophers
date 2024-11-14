@@ -6,7 +6,7 @@
 /*   By: emalungo <emalungo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 10:42:22 by emalungo          #+#    #+#             */
-/*   Updated: 2024/11/08 10:53:19 by emalungo         ###   ########.fr       */
+/*   Updated: 2024/11/14 09:10:12 by emalungo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ void	print_status(t_philosopher *philo, char *status);
 int		init_forks(t_table *table);
 void	get_forks(t_philosopher *philo);
 void	drop_forks(t_philosopher *philo);
+int		has_philosopher_eaten_enough(t_philosopher *philo, t_table *table);
 
 #endif
